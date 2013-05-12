@@ -1,6 +1,6 @@
 # Shortcut
 
-TODO: Write a gem description
+Make your own Bot.
 
 ## Installation
 
@@ -18,7 +18,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Ubuntu 12.04 with Unity-2D
+
+Ubuntu has a bug related to how unity-2d draws itself on screen.
+To fix this issue run the following command before you run shortcut:
+
+    $ gconftool --set --type bool /apps/metacity/general/compositing_manager false
+
+And then log out/in to apply the changes. To restore the default configuration run:
+
+    $ gconftool --set --type bool /apps/metacity/general/compositing_manager true
+
+And again log out/in to apply the changes.
+
+See more information about this [bug](https://bugs.launchpad.net/unity-2d/+bug/1081674).
+
+## Development
+
+    $ ruby --ng-server &
+    $ ruby --ng -S rspec spec
 
 ## Contributing
 
