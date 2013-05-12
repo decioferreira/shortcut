@@ -39,7 +39,7 @@ module Shortcut
         end
       end
 
-      raise "Couldn't find the game board!\nIs the game on the screen?"
+      return false
     end
 
     private
