@@ -17,6 +17,10 @@ class AlwaysOnTopTrueClass < Shortcut::Window; always_on_top true; end
 class AlwaysOnTopFalseClass < Shortcut::Window; always_on_top false; end
 class AlwaysOnTopNoneClass < Shortcut::Window; end
 
+# Size property
+class SizedClass < Shortcut::Window; size 100, 200; end
+class DefaultSizedClass < Shortcut::Window; end
+
 # NativeKeyListener
 class ListenerExampleClass < Shortcut::Window
   attr_accessor :called_actions, :key_pressed_events
@@ -268,6 +272,20 @@ describe Shortcut::Window do
         on_top_none = AlwaysOnTopNoneClass.new
         on_top_none.should_not_receive(:setAlwaysOnTop)
         on_top_none.run
+      end
+    end
+
+    describe 'size property' do
+      it 'sets property' do
+        sized_window = SizedClass.new
+        sized_window.should_receive(:setSize).with(100, 200)
+        sized_window.run
+      end
+
+      it 'does not set property and defaults to 440 by 250' do
+        default_sized_window = DefaultSizedClass.new
+        default_sized_window.should_receive(:setSize).with(440, 250)
+        default_sized_window.run
       end
     end
 

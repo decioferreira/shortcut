@@ -85,6 +85,13 @@ module Shortcut
       setTitle(respond_to?(:default_title) ? default_title : 'Shortcut App')
 
       always_on_top if respond_to?(:always_on_top)
+
+      if respond_to?(:shortcut_window_size)
+        shortcut_window_size
+      else
+        setSize(440, 250)
+      end
+
       GlobalScreen.getInstance.addNativeKeyListener(self)
       addWindowListener(self)
       setVisible true
@@ -100,6 +107,12 @@ module Shortcut
       def always_on_top(bool_value)
         send :define_method, :always_on_top do
           setAlwaysOnTop(bool_value)
+        end
+      end
+
+      def size(width, height)
+        send :define_method, :shortcut_window_size do
+          setSize(width, height)
         end
       end
 
