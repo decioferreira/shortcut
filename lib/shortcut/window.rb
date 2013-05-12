@@ -94,9 +94,10 @@ module Shortcut
 
       GlobalScreen.getInstance.addNativeKeyListener(self)
       addWindowListener(self)
-      setVisible true
 
       create_components if respond_to?(:create_components)
+
+      setVisible true
     end
 
     class << self

@@ -242,7 +242,7 @@ describe Shortcut::Window do
       Shortcut::Window.any_instance.stub(:setVisible)
     end
 
-    describe 'title property' do
+    describe :title do
       it 'sets the JFrame title' do
         title = TitleClass.new
         title.run
@@ -255,7 +255,7 @@ describe Shortcut::Window do
       end
     end
 
-    describe 'always on top property' do
+    describe :always_on_top do
       it 'sets property to true' do
         on_top_true = AlwaysOnTopTrueClass.new
         on_top_true.should_receive(:setAlwaysOnTop).with(true)
@@ -275,7 +275,7 @@ describe Shortcut::Window do
       end
     end
 
-    describe 'size property' do
+    describe :size do
       it 'sets property' do
         sized_window = SizedClass.new
         sized_window.should_receive(:setSize).with(100, 200)
@@ -286,6 +286,14 @@ describe Shortcut::Window do
         default_sized_window = DefaultSizedClass.new
         default_sized_window.should_receive(:setSize).with(440, 250)
         default_sized_window.run
+      end
+    end
+
+    describe :create_components do
+      it 'calls it before setting visibility to true' do
+        subject.should_receive(:create_components).ordered
+        subject.should_receive(:setVisible).ordered
+        subject.run
       end
     end
 
@@ -301,11 +309,6 @@ describe Shortcut::Window do
 
     it 'sets visibility to true' do
       subject.should_receive(:setVisible).with(true)
-      subject.run
-    end
-
-    it 'calls create_components method' do
-      subject.should_receive(:create_components)
       subject.run
     end
   end
