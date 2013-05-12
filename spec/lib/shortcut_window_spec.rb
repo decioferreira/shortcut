@@ -45,59 +45,59 @@ class ListenerExampleClass < Shortcut::Window
 end
 
 describe Shortcut::Window do
-  let(:window) { Shortcut::Window.new }
+  subject { Shortcut::Window.new }
 
   it 'inherits from JFrame' do
-    window.should be_a(JFrame)
+    subject.should be_a(JFrame)
   end
 
   it 'includes NativeKeyListener' do
-    window.should be_a(NativeKeyListener)
+    subject.should be_a(NativeKeyListener)
   end
 
   it 'includes WindowListener' do
-    window.should be_a(WindowListener)
+    subject.should be_a(WindowListener)
   end
 
   describe :create_button do
     let(:jbutton) { double('jbutton').as_null_object }
 
     it 'returns an instance of JButton' do
-      window.create_button('text', 'action').should be_a(JButton)
+      subject.create_button('text', 'action').should be_a(JButton)
     end
 
     it 'creates a button with text' do
       JButton.should_receive(:new).with('text').and_return(jbutton)
-      window.create_button('text', anything())
+      subject.create_button('text', anything())
     end
 
     it 'creates a button with action' do
       JButton.should_receive(:new).and_return(jbutton)
       jbutton.should_receive(:setActionCommand).with('action')
-      window.create_button(anything(), 'action')
+      subject.create_button(anything(), 'action')
     end
 
     it 'returns the created button' do
       JButton.should_receive(:new).and_return(jbutton)
-      window.create_button(anything(), anything()).should eq(jbutton)
+      subject.create_button(anything(), anything()).should eq(jbutton)
     end
 
     it 'enables the button by default' do
       JButton.should_receive(:new).and_return(jbutton)
       jbutton.should_receive(:setEnabled).with(true)
-      window.create_button(anything(), anything())
+      subject.create_button(anything(), anything())
     end
 
     it 'accepts an enabled option to disable the button' do
       JButton.should_receive(:new).and_return(jbutton)
       jbutton.should_receive(:setEnabled).with(false)
-      window.create_button(anything(), anything(), {enabled: false})
+      subject.create_button(anything(), anything(), {enabled: false})
     end
 
     it 'adds self as action listener' do
       JButton.should_receive(:new).and_return(jbutton)
-      jbutton.should_receive(:addActionListener).with(window)
-      window.create_button(anything(), anything())
+      jbutton.should_receive(:addActionListener).with(subject)
+      subject.create_button(anything(), anything())
     end
   end
 
@@ -105,18 +105,18 @@ describe Shortcut::Window do
     let(:robot) { double('robot') }
 
     it 'returns an instance of Robot' do
-      window.robot.should be_a(Robot)
+      subject.robot.should be_a(Robot)
     end
 
     it 'creates and returns a Robot' do
       Robot.should_receive(:new).and_return(robot)
-      window.robot.should eq(robot)
+      subject.robot.should eq(robot)
     end
 
     it 'caches result' do
       Robot.should_receive(:new).once.and_return(robot)
-      window.robot.should eq(robot)
-      window.robot.should eq(robot)
+      subject.robot.should eq(robot)
+      subject.robot.should eq(robot)
     end
   end
 
@@ -124,14 +124,14 @@ describe Shortcut::Window do
     let(:robot) { double('robot') }
 
     before(:each) do
-      window.stub(:robot) { robot }
+      subject.stub(:robot) { robot }
     end
 
     it 'moves mouse to correct position, presses and releases left mouse button, all in the correct order' do
       robot.should_receive(:mouseMove).with(1, 2).ordered
       robot.should_receive(:mousePress).with(InputEvent::BUTTON1_MASK).ordered
       robot.should_receive(:mouseRelease).with(InputEvent::BUTTON1_MASK).ordered
-      window.click(1, 2)
+      subject.click(1, 2)
     end
   end
 
@@ -139,37 +139,37 @@ describe Shortcut::Window do
     let(:text_area) { double('text area').as_null_object }
 
     it 'returns an instance of JTextArea' do
-      window.feedback_text_area.should be_a(JTextArea)
+      subject.feedback_text_area.should be_a(JTextArea)
     end
 
     it 'sets the text' do
       JTextArea.should_receive(:new).and_return(text_area)
       text_area.should_receive(:setText).with('Text')
-      window.feedback_text_area('Text')
+      subject.feedback_text_area('Text')
     end
 
     it 'disables the returned area' do
       JTextArea.should_receive(:new).and_return(text_area)
       text_area.should_receive(:setEditable).with(false)
-      window.feedback_text_area
+      subject.feedback_text_area
     end
 
     it 'sets the background white' do
       JTextArea.should_receive(:new).and_return(text_area)
       text_area.should_receive(:setBackground).with(Color::WHITE)
-      window.feedback_text_area
+      subject.feedback_text_area
     end
 
     it 'sets the foreground black' do
       JTextArea.should_receive(:new).and_return(text_area)
       text_area.should_receive(:setForeground).with(Color::BLACK)
-      window.feedback_text_area
+      subject.feedback_text_area
     end
 
     it 'caches result' do
       JTextArea.should_receive(:new).once.and_return(text_area)
-      window.feedback_text_area.should eq(text_area)
-      window.feedback_text_area.should eq(text_area)
+      subject.feedback_text_area.should eq(text_area)
+      subject.feedback_text_area.should eq(text_area)
     end
   end
 
@@ -178,37 +178,37 @@ describe Shortcut::Window do
     let(:dimension) { Dimension.new }
 
     it 'returns an instance of JScrollPane' do
-      window.feedback_scroll_panel(text_area, dimension).should be_a(JScrollPane)
+      subject.feedback_scroll_panel(text_area, dimension).should be_a(JScrollPane)
     end
 
     it 'creates the scroll panel with the text_area argument' do
       scroll_panel = JScrollPane.new
       JScrollPane.should_receive(:new).with(text_area).and_return(scroll_panel)
-      window.feedback_scroll_panel(text_area, dimension)
+      subject.feedback_scroll_panel(text_area, dimension)
     end
 
     it 'sets preferred size' do
       scroll_panel = JScrollPane.new
       JScrollPane.should_receive(:new).with(text_area).and_return(scroll_panel)
       scroll_panel.should_receive(:setPreferredSize).with(dimension)
-      window.feedback_scroll_panel(text_area, dimension)
+      subject.feedback_scroll_panel(text_area, dimension)
     end
   end
 
   describe :display_info do
     it 'append message to feedback text area' do
-      window.display_info('A')
-      window.display_info('B')
-      window.feedback_text_area.getText.should eq("\nA\nB")
+      subject.display_info('A')
+      subject.display_info('B')
+      subject.feedback_text_area.getText.should eq("\nA\nB")
     end
 
     it 'scrolls down' do
-      window.display_info('A')
-      window.feedback_text_area.getCaretPosition.should eq(1)
-      window.display_info('B')
-      window.feedback_text_area.getCaretPosition.should eq(3)
-      window.display_info('C')
-      window.feedback_text_area.getCaretPosition.should eq(5)
+      subject.display_info('A')
+      subject.feedback_text_area.getCaretPosition.should eq(1)
+      subject.display_info('B')
+      subject.feedback_text_area.getCaretPosition.should eq(3)
+      subject.display_info('C')
+      subject.feedback_text_area.getCaretPosition.should eq(5)
     end
   end
 
@@ -226,14 +226,14 @@ describe Shortcut::Window do
       ImageIO.should_receive(:createImageInputStream).with(input_stream).and_return(image_input_stream)
       ImageIO.should_receive(:read).with(image_input_stream).and_return(image)
 
-      window.load_image('path').should eq(image)
+      subject.load_image('path').should eq(image)
     end
   end
 
   describe :operative_system do
     it 'returns lowercased os.name property' do
       java.lang.System.should_receive(:getProperty).with("os.name").and_return('Linux')
-      window.operative_system.should eq('linux')
+      subject.operative_system.should eq('linux')
     end
   end
 
@@ -242,7 +242,7 @@ describe Shortcut::Window do
       Shortcut::Window.any_instance.stub(:setVisible)
     end
 
-    describe :title do
+    describe 'title property' do
       it 'sets the JFrame title' do
         title = TitleClass.new
         title.run
@@ -250,8 +250,8 @@ describe Shortcut::Window do
       end
 
       it 'sets a JFrame default title of "Shortcut App"' do
-        window.run
-        window.getTitle.should eq('Shortcut App')
+        subject.run
+        subject.getTitle.should eq('Shortcut App')
       end
     end
 
@@ -290,42 +290,47 @@ describe Shortcut::Window do
     end
 
     it 'adds a window listener' do
-      window.should_receive(:addWindowListener).with(window)
-      window.run
+      subject.should_receive(:addWindowListener).with(subject)
+      subject.run
     end
 
     it 'adds a native key listener' do
-      GlobalScreen.getInstance.should_receive(:addNativeKeyListener).with(window)
-      window.run
+      GlobalScreen.getInstance.should_receive(:addNativeKeyListener).with(subject)
+      subject.run
     end
 
     it 'sets visibility to true' do
-      window.should_receive(:setVisible).with(true)
-      window.run
+      subject.should_receive(:setVisible).with(true)
+      subject.run
+    end
+
+    it 'calls create_components method' do
+      subject.should_receive(:create_components)
+      subject.run
     end
   end
 
   describe 'window listeners' do
     [:windowOpened, :windowClosed, :windowClosing, :windowIconified,
       :windowDeiconified, :windowActivated, :windowDeactivated].each do |event|
-      it { window.should respond_to(event).with(1).argument }
+      it { subject.should respond_to(event).with(1).argument }
     end
 
     describe :windowOpened do
       it 'requests focus in window' do
-        window.should_receive(:requestFocusInWindow)
-        window.windowOpened(anything())
+        subject.should_receive(:requestFocusInWindow)
+        subject.windowOpened(anything())
       end
 
       it 'registers native hook' do
         GlobalScreen.should_receive(:registerNativeHook)
-        window.windowOpened(anything())
+        subject.windowOpened(anything())
       end
 
       it 'handles exception when registering native hook' do
         GlobalScreen.should_receive(:registerNativeHook).and_raise(NativeHookException.new('error message!'))
-        window.should_receive(:display_info).with('org.jnativehook.NativeHookException: error message!')
-        window.windowOpened(anything())
+        subject.should_receive(:display_info).with('org.jnativehook.NativeHookException: error message!')
+        subject.windowOpened(anything())
       end
     end
 
@@ -336,24 +341,24 @@ describe Shortcut::Window do
 
       it 'unregisters native hook' do
         GlobalScreen.should_receive(:unregisterNativeHook)
-        window.windowClosed(anything())
+        subject.windowClosed(anything())
       end
 
       it 'runs system finalization' do
         java.lang.System.should_receive(:runFinalization)
-        window.windowClosed(anything())
+        subject.windowClosed(anything())
       end
 
       it 'exit system with value 0' do
         java.lang.System.should_receive(:exit).with(0)
-        window.windowClosed(anything())
+        subject.windowClosed(anything())
       end
     end
   end
 
   describe 'native key listeners' do
     [:nativeKeyReleased, :nativeKeyTyped, :nativeKeyPressed].each do |event|
-      it { window.should respond_to(event).with(1).argument }
+      it { subject.should respond_to(event).with(1).argument }
     end
 
     describe :nativeKeyPressed do
@@ -392,7 +397,7 @@ describe Shortcut::Window do
   end
 
   describe :actionPerformed do
-    it { window.should respond_to(:actionPerformed).with(1).argument }
+    it { subject.should respond_to(:actionPerformed).with(1).argument }
 
     it 'executes block from action function' do
       action_event = OpenStruct.new(getActionCommand: 'some_action')
