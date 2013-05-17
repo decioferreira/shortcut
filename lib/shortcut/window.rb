@@ -83,6 +83,8 @@ module Shortcut
     end
 
     def run
+      setDefaultCloseOperation(JFrame::EXIT_ON_CLOSE)
+
       setTitle(respond_to?(:default_title) ? default_title : 'Shortcut App')
 
       always_on_top if respond_to?(:always_on_top)

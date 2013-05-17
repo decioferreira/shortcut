@@ -323,6 +323,11 @@ describe Shortcut::Window do
       end
     end
 
+    it 'sets default close operation to EXIT_ON_CLOSE' do
+      subject.should_receive(:setDefaultCloseOperation).with(JFrame::EXIT_ON_CLOSE)
+      subject.run
+    end
+
     it 'adds a window listener' do
       subject.should_receive(:addWindowListener).with(subject)
       subject.run
