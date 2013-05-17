@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'shortcut'
+Shortcut::Application.new.run
