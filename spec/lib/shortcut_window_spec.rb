@@ -6,6 +6,8 @@ require "ostruct"
 import java.awt.Dimension
 import java.awt.event.KeyEvent
 
+import javax.swing.BoxLayout
+
 # https://github.com/jruby/jruby/wiki/Persistence
 Dimension.__persistent__ = true
 
@@ -18,8 +20,12 @@ class AlwaysOnTopFalseClass < Shortcut::Window; always_on_top false; end
 class AlwaysOnTopNoneClass < Shortcut::Window; end
 
 # Size property
-class SizedClass < Shortcut::Window; size 100, 200; end
-class DefaultSizedClass < Shortcut::Window; end
+class SizeClass < Shortcut::Window; size 100, 200; end
+class DefaultSizeClass < Shortcut::Window; end
+
+# Layout property
+class LayoutClass < Shortcut::Window; layout BoxLayout; end
+class DefaultLayoutClass < Shortcut::Window; end
 
 # NativeKeyListener
 class ListenerExampleClass < Shortcut::Window
@@ -277,15 +283,35 @@ describe Shortcut::Window do
 
     describe :size do
       it 'sets property' do
-        sized_window = SizedClass.new
-        sized_window.should_receive(:setSize).with(100, 200)
-        sized_window.run
+        size_window = SizeClass.new
+        size_window.should_receive(:setSize).with(100, 200)
+        size_window.run
       end
 
       it 'does not set property and defaults to 440 by 250' do
-        default_sized_window = DefaultSizedClass.new
-        default_sized_window.should_receive(:setSize).with(440, 250)
-        default_sized_window.run
+        default_size_window = DefaultSizeClass.new
+        default_size_window.should_receive(:setSize).with(440, 250)
+        default_size_window.run
+      end
+    end
+
+    describe :layout do
+      it 'sets property' do
+        box_layout = double("BoxLayout")
+        BoxLayout.should_receive(:new).and_return(box_layout)
+
+        layout_window = LayoutClass.new
+        layout_window.should_receive(:setLayout).with(box_layout)
+        layout_window.run
+      end
+
+      it 'does not set property and defaults to border layout' do
+        border_layout = double("BorderLayout")
+        BorderLayout.should_receive(:new).and_return(border_layout)
+
+        default_layout_window = DefaultLayoutClass.new
+        default_layout_window.should_receive(:setLayout).with(border_layout)
+        default_layout_window.run
       end
     end
 

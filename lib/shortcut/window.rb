@@ -1,6 +1,7 @@
 require 'java'
 require 'jar/JNativeHook.jar'
 
+import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.event.ActionListener
 import java.awt.event.InputEvent
@@ -92,6 +93,12 @@ module Shortcut
         setSize(440, 250)
       end
 
+      if respond_to?(:shortcut_window_layout)
+        shortcut_window_layout
+      else
+        setLayout(BorderLayout.new)
+      end
+
       GlobalScreen.getInstance.addNativeKeyListener(self)
       addWindowListener(self)
 
@@ -116,6 +123,12 @@ module Shortcut
       def size(width, height)
         send :define_method, :shortcut_window_size do
           setSize(width, height)
+        end
+      end
+
+      def layout(type_class)
+        send :define_method, :shortcut_window_layout do
+          setLayout(type_class.new)
         end
       end
 
