@@ -243,6 +243,35 @@ describe Shortcut::Window do
     end
   end
 
+  describe :set_window_icons do
+    it 'adds 16x16, 32x32, 64x64, 128x128 icons' do
+      image_16, image_32, image_64, image_128 = double('image_16'), double('image_32'), double('image_64'), double('image_128')
+
+      image_icon_16, image_icon_32, image_icon_64, image_icon_128 = double('image_icon_16'), double('image_icon_32'), double('image_icon_64'), double('image_icon_128')
+
+      image_icon_16.stub(:getImage) { image_16 }
+      image_icon_32.stub(:getImage) { image_32 }
+      image_icon_64.stub(:getImage) { image_64 }
+      image_icon_128.stub(:getImage) { image_128 }
+
+      ImageIcon.should_receive(:new).with('images/icons/16.png').and_return(image_icon_16)
+      ImageIcon.should_receive(:new).with('images/icons/32.png').and_return(image_icon_32)
+      ImageIcon.should_receive(:new).with('images/icons/64.png').and_return(image_icon_64)
+      ImageIcon.should_receive(:new).with('images/icons/128.png').and_return(image_icon_128)
+
+      array_list = double('array_list')
+      array_list.should_receive(:add).with(image_16)
+      array_list.should_receive(:add).with(image_32)
+      array_list.should_receive(:add).with(image_64)
+      array_list.should_receive(:add).with(image_128)
+      ArrayList.should_receive(:new).and_return(array_list)
+
+      subject.should_receive(:setIconImages).with(array_list)
+
+      subject.set_window_icons
+    end
+  end
+
   describe :run do
     before(:each) do
       Shortcut::Window.any_instance.stub(:setVisible)
@@ -315,12 +344,15 @@ describe Shortcut::Window do
       end
     end
 
-    describe :create_components do
-      it 'calls it before setting visibility to true' do
-        subject.should_receive(:create_components).ordered
-        subject.should_receive(:setVisible).ordered
-        subject.run
-      end
+    it 'calls create_components before setting visibility to true' do
+      subject.should_receive(:create_components).ordered
+      subject.should_receive(:setVisible).ordered
+      subject.run
+    end
+
+    it 'calls set_window_icons' do
+      subject.should_receive(:set_window_icons)
+      subject.run
     end
 
     it 'sets default close operation to EXIT_ON_CLOSE' do

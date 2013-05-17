@@ -7,9 +7,11 @@ import java.awt.event.ActionListener
 import java.awt.event.InputEvent
 import java.awt.event.WindowListener
 import java.awt.Robot
+import java.util.ArrayList
 
 import java.io.ByteArrayInputStream
 
+import javax.swing.ImageIcon
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JScrollPane
@@ -82,12 +84,23 @@ module Shortcut
       java.lang.System.getProperty("os.name").downcase
     end
 
+    def set_window_icons
+      # http://www.iconarchive.com/show/oxygen-icons-by-oxygen-icons.org/Apps-accessories-calculator-icon.html
+      icons = ArrayList.new
+      [16, 32, 64, 128].each do |size|
+        icons.add(ImageIcon.new("images/icons/#{size}.png").getImage)
+      end
+      setIconImages(icons)
+    end
+
     def run
       setDefaultCloseOperation(JFrame::EXIT_ON_CLOSE)
 
       setTitle(respond_to?(:default_title) ? default_title : 'Shortcut App')
 
       always_on_top if respond_to?(:always_on_top)
+
+      set_window_icons
 
       if respond_to?(:shortcut_window_size)
         shortcut_window_size
