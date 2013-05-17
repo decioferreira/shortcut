@@ -88,7 +88,7 @@ module Shortcut
       # http://www.iconarchive.com/show/oxygen-icons-by-oxygen-icons.org/Apps-accessories-calculator-icon.html
       icons = ArrayList.new
       [16, 32, 64, 128].each do |size|
-        icons.add(ImageIcon.new("images/icons/#{size}.png").getImage)
+        icons.add(self.class.get_image("images/icons/#{size}.png"))
       end
       setIconImages(icons)
     end
@@ -163,6 +163,10 @@ module Shortcut
         send :define_method, "action_#{name}_handler".to_sym do
           self.instance_eval(&block)
         end
+      end
+
+      def get_image(path)
+        ImageIcon.new(path).getImage
       end
     end
 

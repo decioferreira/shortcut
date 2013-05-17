@@ -243,29 +243,32 @@ describe Shortcut::Window do
     end
   end
 
+  describe :get_image do
+    it 'returns a loaded image' do
+      image = double('image')
+      image_icon = double('image_icon')
+      image_icon.stub(:getImage) { image }
+      ImageIcon.should_receive(:new).with('image_path').and_return(image_icon)
+      Shortcut::Window.get_image('image_path').should be(image)
+    end
+  end
+
   describe :set_window_icons do
     it 'adds 16x16, 32x32, 64x64, 128x128 icons' do
       image_16, image_32, image_64, image_128 = double('image_16'), double('image_32'), double('image_64'), double('image_128')
 
-      image_icon_16, image_icon_32, image_icon_64, image_icon_128 = double('image_icon_16'), double('image_icon_32'), double('image_icon_64'), double('image_icon_128')
-
-      image_icon_16.stub(:getImage) { image_16 }
-      image_icon_32.stub(:getImage) { image_32 }
-      image_icon_64.stub(:getImage) { image_64 }
-      image_icon_128.stub(:getImage) { image_128 }
-
-      ImageIcon.should_receive(:new).with('images/icons/16.png').and_return(image_icon_16)
-      ImageIcon.should_receive(:new).with('images/icons/32.png').and_return(image_icon_32)
-      ImageIcon.should_receive(:new).with('images/icons/64.png').and_return(image_icon_64)
-      ImageIcon.should_receive(:new).with('images/icons/128.png').and_return(image_icon_128)
+      Shortcut::Window.should_receive(:get_image).with('images/icons/16.png').and_return(image_16)
+      Shortcut::Window.should_receive(:get_image).with('images/icons/32.png').and_return(image_32)
+      Shortcut::Window.should_receive(:get_image).with('images/icons/64.png').and_return(image_64)
+      Shortcut::Window.should_receive(:get_image).with('images/icons/128.png').and_return(image_128)
 
       array_list = double('array_list')
       array_list.should_receive(:add).with(image_16)
       array_list.should_receive(:add).with(image_32)
       array_list.should_receive(:add).with(image_64)
       array_list.should_receive(:add).with(image_128)
-      ArrayList.should_receive(:new).and_return(array_list)
 
+      ArrayList.should_receive(:new).and_return(array_list)
       subject.should_receive(:setIconImages).with(array_list)
 
       subject.set_window_icons
