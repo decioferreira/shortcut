@@ -1,4 +1,11 @@
-require 'rake'
+require 'thor'
 
-class Shortcut::Application < Rake::Application
+class Shortcut::Application < Thor::Group
+  include Thor::Actions
+
+  argument :name
+
+  def bundler_gem
+    exec("bundle gem #{name}")
+  end
 end
