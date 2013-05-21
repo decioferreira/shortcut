@@ -51,6 +51,12 @@ module Shortcut
         if options[:test]
           template(".travis.yml.tt",             File.join(target, ".travis.yml"),                       opts)
         end
+
+        # Icons
+        [16, 32, 64, 128].each do |size|
+          copy_file("images/icons/#{size}.png",  File.join(target, "images/icons/#{size}.png"))
+        end
+
         say "Initializating git repo in #{target}"
         Dir.chdir(target) { `git init`; `git add .` }
 
