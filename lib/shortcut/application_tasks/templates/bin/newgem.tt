@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require '<%= config[:namespaced_path] %>'
-<%= config[:constant_array].join('::') %>::Application.new.run
+<%= config[:constant_name] %>::Application.new.run

@@ -23,4 +23,6 @@ Gem::Specification.new do |spec|
 <% if config[:test] -%>
   spec.add_development_dependency "<%=config[:test]%>"
 <% end -%>
+
+  spec.add_dependency "shortcut"
 end
