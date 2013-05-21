@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
-require 'shortcut'
+require 'shortcut/application'
 Shortcut::Application.start
