@@ -4,19 +4,18 @@ Make your own Bot.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'shortcut'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
     $ gem install shortcut
 
 ## Usage
+
+At the command prompt, create a new Shortcut application:
+
+    $ shortcut new mybot
+
+Change directory to `mybot` and start the application:
+
+    $ cd mybot
+    $ ruby -Ilib ./bin/mybot
 
 ### Ubuntu 12.04 with Unity-2D
 

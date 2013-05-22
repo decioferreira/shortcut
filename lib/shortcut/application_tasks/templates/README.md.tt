@@ -1,6 +1,6 @@
 # <%=config[:constant_name]%>
 
-TODO: Write a gem description
+TODO: Write an app description
 
 ## Usage
 
@@ -13,3 +13,7 @@ TODO: Write a gem description
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Credits
+
+* [Icons](http://www.iconarchive.com/show/soft-scraps-icons-by-deleket/Gear-icon.html)

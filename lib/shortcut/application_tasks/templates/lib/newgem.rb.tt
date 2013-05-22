@@ -1,9 +1,52 @@
+require "shortcut"
 require "<%=config[:namespaced_path]%>/version"
+
+import java.awt.Dimension
+import java.awt.event.KeyEvent
+import javax.swing.JPanel
 
 <%- config[:constant_array].each_with_index do |c,i| -%>
 <%= '  '*i %>module <%= c %>
 <%- end -%>
-<%= '  '*config[:constant_array].size %># Your code goes here...
+<%= '  '*config[:constant_array].size %>class Application < Shortcut::Window
+<%= '  '*config[:constant_array].size %>  title <%=config[:constant_name].inspect%>
+<%= '  '*config[:constant_array].size %>  always_on_top true
+<%= '  '*config[:constant_array].size %>  size 440, 250
+<%= '  '*config[:constant_array].size %>  layout BorderLayout
+
+<%= '  '*config[:constant_array].size %>  action 'some_example_action' do
+<%= '  '*config[:constant_array].size %>    display_info("Some example action!")
+<%= '  '*config[:constant_array].size %>  end
+
+<%= '  '*config[:constant_array].size %>  key_pressed KeyEvent::VK_A, 'some_example_action'
+
+<%= '  '*config[:constant_array].size %>  key_pressed KeyEvent::VK_ESCAPE do
+<%= '  '*config[:constant_array].size %>    display_info("Escape key pressed!")
+<%= '  '*config[:constant_array].size %>  end
+
+<%= '  '*config[:constant_array].size %>  key_pressed KeyEvent::VK_C do
+<%= '  '*config[:constant_array].size %>    display_info("This will simulate a click at position 100, 200! (uncomment code first for it to work)")
+<%= '  '*config[:constant_array].size %>    # Uncomment the next line for it to work
+<%= '  '*config[:constant_array].size %>    # click(100, 200)
+<%= '  '*config[:constant_array].size %>  end
+
+<%= '  '*config[:constant_array].size %>  def create_components
+<%= '  '*config[:constant_array].size %>    # JPanel
+<%= '  '*config[:constant_array].size %>    panel = JPanel.new()
+<%= '  '*config[:constant_array].size %>    add(panel, BorderLayout::NORTH)
+
+<%= '  '*config[:constant_array].size %>    # Button
+<%= '  '*config[:constant_array].size %>    button = create_button('Some example button', 'some_example_action')
+<%= '  '*config[:constant_array].size %>    panel.add(button)
+
+<%= '  '*config[:constant_array].size %>    # Feedback text area
+<%= '  '*config[:constant_array].size %>    text_area = feedback_text_area("Welcome to <%=config[:constant_name]%>!")
+<%= '  '*config[:constant_array].size %>    scroll_pane = feedback_scroll_panel(text_area, Dimension.new(375, 125))
+<%= '  '*config[:constant_array].size %>    add(scroll_pane, BorderLayout::CENTER)
+<%= '  '*config[:constant_array].size %>  end
+
+<%= '  '*config[:constant_array].size %>  # Your code goes here...
+<%= '  '*config[:constant_array].size %>end
 <%- (config[:constant_array].size-1).downto(0) do |i| -%>
 <%= '  '*i %>end
 <%- end -%>
