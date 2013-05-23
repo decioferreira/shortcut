@@ -8,8 +8,8 @@ module Shortcut
       exec('warble && mkdir -p pkg && mv *.jar pkg')
     end
 
-    desc "run", "Build and run application"
-    def run
+    desc "start", "Build and run application"
+    def start
       exec('warble && mkdir -p pkg && mv *.jar pkg && java -jar pkg/*.jar')
     end
 
