@@ -2,3 +2,5 @@
 
 require '<%= config[:namespaced_path] %>'
 <%= config[:constant_name] %>::Application.new.run
+
+require 'keep_running'
