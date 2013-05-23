@@ -4,7 +4,18 @@ TODO: Write an app description
 
 ## Usage
 
+To test your application, run:
+
     $ ruby -Ilib ./bin/<%=config[:name]%>
+
+To make and run a Java jar:
+
+    $ shortcut build
+    $ java -jar pkg/<%=config[:name]%>.jar
+
+Or you can simply run:
+
+    $ shortcut run
 
 ## Contributing
 

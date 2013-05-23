@@ -29,16 +29,15 @@ module Shortcut
           :email           => git_user_email.empty? ? "TODO: Write your email address" : git_user_email,
           :test            => options[:test]
         }
-        gemspec_dest = File.join(target, "#{app_name}.gemspec")
         template("Gemfile.tt",                   File.join(target, "Gemfile"),                           opts)
         template("Rakefile.tt",                  File.join(target, "Rakefile"),                          opts)
         template("LICENSE.txt.tt",               File.join(target, "LICENSE.txt"),                       opts)
         template("README.md.tt",                 File.join(target, "README.md"),                         opts)
         template("gitignore.tt",                 File.join(target, ".gitignore"),                        opts)
-        template("newgem.gemspec.tt",            gemspec_dest,                                           opts)
         template("lib/newgem.rb.tt",             File.join(target, "lib/#{namespaced_path}.rb"),         opts)
         template("lib/newgem/version.rb.tt",     File.join(target, "lib/#{namespaced_path}/version.rb"), opts)
         template("bin/newgem.tt",                File.join(target, 'bin', app_name),                     opts)
+        template("config/launch4j.xml.tt",       File.join(target, 'config/launch4j.xml'),               opts)
         case options[:test]
         when 'rspec'
           template("rspec.tt",                   File.join(target, ".rspec"),                            opts)
@@ -59,10 +58,6 @@ module Shortcut
 
         say "Initializating git repo in #{target}"
         Dir.chdir(target) { `git init`; `git add .` }
-
-        if options[:edit]
-          run("#{options["edit"]} \"#{gemspec_dest}\"")  # Open gemspec in editor
-        end
       end
     end
   end

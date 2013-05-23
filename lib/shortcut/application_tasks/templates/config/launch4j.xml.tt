@@ -1,0 +1,8 @@
+<launch4jConfig>
+  <headerType>gui</headerType>
+  <outfile>../pkg/<%=config[:name]%>.exe</outfile>
+  <jar>../pkg/<%=config[:name]%>.jar</jar>
+  <jre>
+    <minVersion>1.6.5</minVersion>
+  </jre>
+</launch4jConfig>

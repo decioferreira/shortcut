@@ -5,7 +5,12 @@ module Shortcut
   class Application < Thor
     desc "build", "Build runnable archive"
     def build
-      exec('rake install && warble')
+      exec('warble && mkdir -p pkg && mv *.jar pkg')
+    end
+
+    desc "run", "Build and run application"
+    def run
+      exec('warble && mkdir -p pkg && mv *.jar pkg && java -jar pkg/*.jar')
     end
 
     method_option :test, :type => :string, :lazy_default => 'rspec', :aliases => '-t', :desc => "Generate a test directory for your application. Supports: 'rspec' (default), 'minitest'"
