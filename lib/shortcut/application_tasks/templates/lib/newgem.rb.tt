@@ -25,9 +25,9 @@ import javax.swing.JPanel
 <%= '  '*config[:constant_array].size %>  end
 
 <%= '  '*config[:constant_array].size %>  key_pressed KeyEvent::VK_C do
-<%= '  '*config[:constant_array].size %>    display_info("This will simulate a click at position 100, 200! (uncomment code first for it to work)")
+<%= '  '*config[:constant_array].size %>    display_info("This will simulate a click at position 100, 200! (uncomment code for it to work)")
 <%= '  '*config[:constant_array].size %>    # Uncomment the next line for it to work
-<%= '  '*config[:constant_array].size %>    # click(100, 200)
+<%= '  '*config[:constant_array].size %>    #click(100, 200)
 <%= '  '*config[:constant_array].size %>  end
 
 <%= '  '*config[:constant_array].size %>  def create_components
@@ -44,8 +44,6 @@ import javax.swing.JPanel
 <%= '  '*config[:constant_array].size %>    scroll_pane = feedback_scroll_panel(text_area, Dimension.new(375, 125))
 <%= '  '*config[:constant_array].size %>    add(scroll_pane, BorderLayout::CENTER)
 <%= '  '*config[:constant_array].size %>  end
-
-<%= '  '*config[:constant_array].size %>  # Your code goes here...
 <%= '  '*config[:constant_array].size %>end
 <%- (config[:constant_array].size-1).downto(0) do |i| -%>
 <%= '  '*i %>end

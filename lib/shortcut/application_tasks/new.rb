@@ -64,7 +64,6 @@ module Shortcut
           run("#{options["edit"]} \"#{gemspec_dest}\"")  # Open gemspec in editor
         end
       end
-
     end
   end
 end
